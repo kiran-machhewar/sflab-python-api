@@ -21,7 +21,7 @@ def json_post():
 @app.route('/oauth/callback',methods=['GET'])
 def handle_oauth_callback():    
     code = request.args.get('code')   
-    access_token = kmlib.getAccessTokenByCode(code,request.args.get('state'),os.environ['CLIENT_ID'],os.environ['SECRETE_KEY'])
+    access_token = util.kmlib.getAccessTokenByCode(code,request.args.get('state'),os.environ['CLIENT_ID'],os.environ['SECRETE_KEY'])
     resp = Response('{ "Passed Name": "Code is '+code+'", "Access Token":"'+access_token+'"}')
     return resp
 
