@@ -1,10 +1,23 @@
 from urllib.request import Request, urlopen
 import requests
-import re
-from xml.dom import minidom
 from xml.sax.saxutils import escape
-import csv
 import os.path
+
+def sayHello():
+    print('This is from kmlib.py inside sayHello')
+
+def getAccessTokenByCode(code,testVsLogin,clientId,secreteKey):
+    endpoint = 'https://{}.salesforce.com/services/oauth2/token'.format(testVsLogin)
+    requestBody =   """client_id={}
+                       &redirect_uri=https%3A%2F%2Fsflab-python-api.herokuapp.com%2Foauth%2Fcallback
+                       &client_secret={}
+                       &grant_type=authorization_code&format=json
+                       &code={}""".format(clientId,secreteKey,code)
+    headers  = {'Content-Type':'application/x-www-form-urlencoded'}
+    print(requestBody)
+    result = requests.post(endpoint, data=requestBody,headers=headers)      
+    print(result.json()['access_token'])
+    return result.json()['access_token']
 
 #run anonymous code 
 def runApexCode(apexCode, sessionId, instanceURL, orgId):
@@ -42,3 +55,7 @@ def runApexCode(apexCode, sessionId, instanceURL, orgId):
     debugLog = responseDOM.getElementsByTagName('debugLog')
     log = debugLog[0].firstChild.data
     return log
+
+
+if __name__ == '__main__':
+    getAccessTokenByCode('aPrxbOND3gL_2LZoaVgHqSAwlP71Jzl2EjcscB3ouWxkzpBdAN3C_ATbmDxJiTzfTz_y.8bHbw==','login','3MVG9g9rbsTkKnAWoqLITQr6PwYP.OzzCi2qpJ4FvKRHOUeti9_o6zvqUSDS.2LroT52i5nLzdZkxvgu6O0J9','5447957181350656860')
