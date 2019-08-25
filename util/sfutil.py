@@ -19,7 +19,7 @@ def json_post():
 @app.route('/oauth/callback',methods=['GET'])
 def handle_oauth_callback():    
     code = request.args.get('code')    
-    resp = Response('{ "Passed Name": "Code is '+code+'", "Secrete Key":"'+os.environ['SECRETE_KEY']+'"}')
+    resp = Response('{ "Passed Name": "Code is '+code+'"}')
     return resp
 
 if __name__ == '__main__':
