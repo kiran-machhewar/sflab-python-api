@@ -55,7 +55,3 @@ def runApexCode(apexCode, sessionId, instanceURL, orgId):
     debugLog = responseDOM.getElementsByTagName('debugLog')
     log = debugLog[0].firstChild.data
     return log
-
-
-if __name__ == '__main__':
-    getAccessTokenByCode('aPrxbOND3gL_2LZoaVgHqSAwlP71Jzl2EjcscB3ouWxkzpBdAN3C_ATbmDxJiTzfTz_y.8bHbw==','login','3MVG9g9rbsTkKnAWoqLITQr6PwYP.OzzCi2qpJ4FvKRHOUeti9_o6zvqUSDS.2LroT52i5nLzdZkxvgu6O0J9','5447957181350656860')
