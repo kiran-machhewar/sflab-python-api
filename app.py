@@ -14,7 +14,14 @@ def json_post():
            { "Passed Name": "Kiran",
            "Passed Email": "smachhewar@gmail.com" }''')
     resp.headers['Content-Type'] = 'application/json'
-    return resp;
+    return resp
+
+@app.route('/oauth/callback',methods=['GET'])
+def handle_oauth_callback():    
+    code = request.args.get('code')
+    print('Printing req data')    
+    resp = Response('{ "Passed Name": "Code is '+code+'"}')
+    return resp
 
 if __name__ == '__main__':
     app.run()
