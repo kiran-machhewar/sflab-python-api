@@ -1,4 +1,4 @@
-from flask import Flask, request, Response
+from flask import Flask, request, Response, redirect
 from flask import render_template
 import os.path
 import util.kmlib
@@ -11,8 +11,8 @@ def hello_world():
 @app.route('/oauth/callback',methods=['GET'])
 def handle_oauth_callback():    
     code = request.args.get('code')   
-    access_token = util.kmlib.getAccessTokenByCode(code,request.args.get('state'),os.environ['CLIENT_ID'],os.environ['SECRETE_KEY'])    
-    return render_template('ouath_result.html', access_token=access_token)    
+    access_token = util.kmlib.getAccessTokenByCode(code,request.args.get('state'),os.environ['CLIENT_ID'],os.environ['SECRETE_KEY'])        
+    return redirect('https://enigmatic-river-52223.herokuapp.com?testVsLogin='+request.args.get('state')+'&access_token='+access_token)
 
 if __name__ == '__main__':    
     app.run()
