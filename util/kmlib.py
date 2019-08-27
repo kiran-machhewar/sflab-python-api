@@ -19,6 +19,12 @@ def getAccessTokenByCode(code,testVsLogin,clientId,secreteKey):
     print(result.json()['access_token'])
     return result.json()['access_token']
 
+def getUserInfo(sessionId,testVsLogin):
+    headers = {'Accept': 'application/json'}
+    response = r = requests.get('https://'+testVsLogin+'.salesforce.com/services/oauth2/userinfo?access_token='+sessionId,headers=headers)        
+    return response.json()   
+
+
 #run anonymous code 
 def runApexCode(apexCode, sessionId, instanceURL, orgId):
     endpoint = '{}/services/Soap/s/43.0/{}'.format(instanceURL,orgId)
