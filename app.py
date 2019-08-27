@@ -22,7 +22,13 @@ def handle_api_get_sobject_ids():
 def getUserInfo():
     access_token = request.args.get('access_token')
     testVsLogin  = request.args.get('testVsLogin')
-    return util.kmlib.getUserInfo(access_token,testVsLogin)
+    jsonResponse = util.kmlib.getUserInfo(access_token,testVsLogin)
+    print('JSONResponse')
+    print(jsonResponse)
+    resp = Response(jsonResponse)
+    resp.headers['Access-Control-Allow-Origin'] = '*'
+    resp.headers['Content-Type'] = 'application/json'
+    return resp 
     
 
 

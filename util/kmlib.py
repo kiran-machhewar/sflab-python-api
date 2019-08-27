@@ -21,8 +21,8 @@ def getAccessTokenByCode(code,testVsLogin,clientId,secreteKey):
 
 def getUserInfo(sessionId,testVsLogin):
     headers = {'Accept': 'application/json'}
-    response = r = requests.get('https://'+testVsLogin+'.salesforce.com/services/oauth2/userinfo?access_token='+sessionId,headers=headers)        
-    return response.json()   
+    response = requests.get('https://'+testVsLogin+'.salesforce.com/services/oauth2/userinfo?access_token='+sessionId,headers=headers)           
+    return response.text 
 
 
 #run anonymous code 
