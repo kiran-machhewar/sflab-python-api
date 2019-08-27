@@ -14,11 +14,11 @@ def handle_oauth_callback():
     access_token = util.kmlib.getAccessTokenByCode(code,request.args.get('state'),os.environ['CLIENT_ID'],os.environ['SECRETE_KEY'])        
     return redirect('https://enigmatic-river-52223.herokuapp.com?testVsLogin='+request.args.get('state')+'&access_token='+access_token)
 
-@app.route('/api/getSObjectIds',method=['POST'])
+@app.route('/api/getSObjectIds',methods=['POST'])
 def handle_api_get_sobject_ids():
     return ''
     
-@app.route('/api/getUserInfo',method=['GET'])
+@app.route('/api/getUserInfo',methods=['GET'])
 def getUserInfo():
     access_token = request.args.get('access_token')
     testVsLogin  = request.args.get('testVsLogin')
