@@ -35,6 +35,7 @@ def get_sobject_ids():
 
 @app.route('/api/mysimpleapi',methods=['POST'])
 def mysimpleapi():
+    print('inside my simple api')
     resp = Response('{"success":"ok"}')
     resp.headers['Access-Control-Allow-Origin'] = '*'
     resp.headers['Content-Type'] = 'application/json'
