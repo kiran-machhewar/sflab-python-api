@@ -17,10 +17,10 @@ def handle_oauth_callback():
 
 @app.route('/api/getSObjectIds',methods=['POST'])
 def getSObjectIds():
-    if not request.json or not 'sessionId' in request.json or not 'instanceURL' in request.json or not 'batchSize' in request.json or not 'query' in request.json :
-        abort(400)
     print('request.json')
     print(request.json)
+    if not request.json or not 'sessionId' in request.json or not 'instanceURL' in request.json or not 'batchSize' in request.json or not 'query' in request.json :
+        abort(400)    
     result = util.kmlib.getSObjectIds(request.json['query'],request.json['sessionId'],request.json['instanceURL'],request.json['batchSize'])    
     print('jsonDump-->')
     print(json.dumps(result))
