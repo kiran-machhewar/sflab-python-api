@@ -31,11 +31,12 @@ def getSObjectIds(query,sessionId,instanceURL,batchSize):
     sobjectIds = []
     subsetRecordIds = []
     index = 0
+    batchSizeInt = int(batchSize)
     for record in result['records']:
-        if index < batchSize:
+        if index < batchSizeInt:
             subsetRecordIds.append(record['Id'])
             index = index + 1
-        if index == batchSize:
+        if index == batchSizeInt:
             index = 0
             sobjectIds.append(subsetRecordIds)
             subsetRecordIds = []
