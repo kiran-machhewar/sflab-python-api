@@ -1,4 +1,5 @@
 from urllib.request import Request, urlopen
+from simple_salesforce import Salesforce
 import requests
 from xml.sax.saxutils import escape
 import os.path
@@ -24,6 +25,22 @@ def getUserInfo(sessionId,testVsLogin):
     response = requests.get('https://'+testVsLogin+'.salesforce.com/services/oauth2/userinfo?access_token='+sessionId,headers=headers)           
     return response.text 
 
+def getSObjectIds(query,sessionId,instanceURL,batchSize):    
+    sf = Salesforce(instance_url=instanceURL, session_id=sessionId)
+    result = sf.query_all(query)
+    sobjectIds = []
+    subsetRecordIds = []
+    index = 0
+    for record in result['records']:
+        if index < batchSize:
+            subsetRecordIds.append(record['Id'])
+            index = index + 1
+        if index == batchSize:
+            index = 0
+            sobjectIds.append(subsetRecordIds)
+            subsetRecordIds = []
+    sobjectIds.append(subsetRecordIds)
+    return sobjectIds
 
 #run anonymous code 
 def runApexCode(apexCode, sessionId, instanceURL, orgId):

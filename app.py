@@ -15,8 +15,14 @@ def handle_oauth_callback():
     return redirect('https://enigmatic-river-52223.herokuapp.com?testVsLogin='+request.args.get('state')+'&access_token='+access_token)
 
 @app.route('/api/getSObjectIds',methods=['POST'])
-def handle_api_get_sobject_ids():
-    return ''
+def getSObjectIds():
+    if not request.json or not 'sessionId' in request.json or not 'instanceURL' in request.json or not 'batchSize' in request.json or not 'query' in request.json :
+        abort(400)
+    result = util.kmlib.getSObjectIds(request.json['query'],request.json['sessionId'],request.json['instanceURL'],request.json['batchSize'])
+    resp = Response(result)
+    resp.headers['Access-Control-Allow-Origin'] = '*'
+    resp.headers['Content-Type'] = 'application/json'
+    return resp
     
 @app.route('/api/getUserInfo',methods=['GET'])
 def getUserInfo():
@@ -30,8 +36,6 @@ def getUserInfo():
     resp.headers['Content-Type'] = 'application/json'
     return resp 
     
-
-
 if __name__ == '__main__':    
     app.run()
     
