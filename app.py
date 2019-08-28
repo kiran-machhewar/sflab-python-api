@@ -19,7 +19,11 @@ def handle_oauth_callback():
 def getSObjectIds():
     if not request.json or not 'sessionId' in request.json or not 'instanceURL' in request.json or not 'batchSize' in request.json or not 'query' in request.json :
         abort(400)
-    result = util.kmlib.getSObjectIds(request.json['query'],request.json['sessionId'],request.json['instanceURL'],request.json['batchSize'])        
+    print('request.json')
+    print(request.json)
+    result = util.kmlib.getSObjectIds(request.json['query'],request.json['sessionId'],request.json['instanceURL'],request.json['batchSize'])    
+    print('jsonDump-->')
+    print(json.dumps(result))
     resp = Response(json.dumps(result))
     resp.headers['Access-Control-Allow-Origin'] = '*'
     resp.headers['Content-Type'] = 'application/json'
