@@ -16,7 +16,7 @@ def handle_oauth_callback():
     return redirect('https://enigmatic-river-52223.herokuapp.com?testVsLogin='+request.args.get('state')+'&access_token='+access_token)
 
 @app.route('/api/getSObjectIds',methods=['POST'])
-def getSObjectIds():
+def get_sobject_ids():
     resp = Response('{"success":"ok"}')
     resp.headers['Access-Control-Allow-Origin'] = '*'
     resp.headers['Content-Type'] = 'application/json'
@@ -29,6 +29,13 @@ def getSObjectIds():
     print('jsonDump-->')
     print(json.dumps(result))
     resp = Response(json.dumps(result))
+    resp.headers['Access-Control-Allow-Origin'] = '*'
+    resp.headers['Content-Type'] = 'application/json'
+    return resp
+
+@app.route('/api/mysimpleapi',methods=['POST'])
+def mysimpleapi():
+    resp = Response('{"success":"ok"}')
     resp.headers['Access-Control-Allow-Origin'] = '*'
     resp.headers['Content-Type'] = 'application/json'
     return resp
