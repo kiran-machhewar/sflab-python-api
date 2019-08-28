@@ -17,6 +17,10 @@ def handle_oauth_callback():
 
 @app.route('/api/getSObjectIds',methods=['POST'])
 def getSObjectIds():
+    resp = Response('{"success":"ok"}')
+    resp.headers['Access-Control-Allow-Origin'] = '*'
+    resp.headers['Content-Type'] = 'application/json'
+    return resp
     print('request.json')
     print(request.json)
     if not request.json or not 'sessionId' in request.json or not 'instanceURL' in request.json or not 'batchSize' in request.json or not 'query' in request.json :
