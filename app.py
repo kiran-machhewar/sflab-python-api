@@ -33,7 +33,7 @@ def get_sobject_ids():
     resp.headers['Content-Type'] = 'application/json'
     return resp
 
-@app.route('/api/mysimpleapi',methods=['POST'])
+@app.route('/api/mysimpleapi',methods=['POST','GET'])
 def mysimpleapi():
     print('inside my simple api')
     resp = Response('{"success":"ok"}')
