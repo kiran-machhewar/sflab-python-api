@@ -33,8 +33,13 @@ def get_sobject_ids():
 @app.route('/api/runApexCode',methods=['POST'])
 def runApexCode():
     if not request.json or not 'sessionId' in request.json or not 'instanceURL' in request.json or not 'apexCode' in request.json or not 'orgId' in request.json :
-        abort(400)  
-    result = util.kmlib.runApexCode(apexCode, sessionId, instanceURL, orgId)
+        abort(400) 
+    apexCode = request.json['apexCode']    
+    sessionId = request.json['sessionId']    
+    instanceURL = request.json['instanceURL']    
+    orgId = request.json['orgId']    
+    
+    result = util.kmlib.runApexCode( apexCode, sessionId, instanceURL, orgId)
     resp = Response(result)
     resp.headers['Access-Control-Allow-Origin'] = '*'
     resp.headers['Content-Type'] = 'application/json'
