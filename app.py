@@ -1,9 +1,12 @@
 from flask import Flask, request, Response, redirect
+from flask_cors import CORS, cross_origin
 from flask import render_template
 import json
 import os.path
 import util.kmlib
 app = Flask(__name__)
+cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 @app.route('/')
 def hello_world():
