@@ -1,5 +1,7 @@
 from urllib.request import Request, urlopen
 from simple_salesforce import Salesforce
+from xml.dom import minidom
+from xml.sax.saxutils import escape
 import requests
 from xml.sax.saxutils import escape
 import os.path
