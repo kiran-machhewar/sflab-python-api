@@ -4,6 +4,7 @@ from flask import render_template
 import json
 import os.path
 import util.kmlib
+import traceback
 app = Flask(__name__)
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
@@ -25,8 +26,8 @@ def get_sobject_ids():
             abort(400)    
         result = util.kmlib.getSObjectIds(request.json['query'],request.json['sessionId'],request.json['instanceURL'],request.json['batchSize'])        
         resp = Response(json.dumps(result))       
-    except as error:
-        resp = Response("{'errorMessage':'"+error+"'}", status=503, mimetype='application/json')
+    except Exception as error:
+        resp = Response("{'errorMessage':'"+error+"' , 'stackTrace':'"+traceback.format_exc()+"'}", status=503, mimetype='application/json')
     resp.headers['Access-Control-Allow-Origin'] = '*'
     resp.headers['Content-Type'] = 'application/json'
     return resp        
