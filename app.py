@@ -1,10 +1,9 @@
-from flask import Flask, request, Response, redirect
+from flask import Flask, request, Response, redirect, abort
 from flask_cors import CORS, cross_origin
 from flask import render_template
 import json
 import os.path
 import util.kmlib
-import traceback
 app = Flask(__name__)
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
@@ -23,11 +22,11 @@ def handle_oauth_callback():
 def get_sobject_ids():
     try:
         if not request.json or not 'sessionId' in request.json or not 'instanceURL' in request.json or not 'batchSize' in request.json or not 'query' in request.json :
-            abort(400)    
+            raise Exception('Paramters are missing.')
         result = util.kmlib.getSObjectIds(request.json['query'],request.json['sessionId'],request.json['instanceURL'],request.json['batchSize'])        
         resp = Response(json.dumps(result))       
     except Exception as error:
-        resp = Response("{'errorMessage':'"+error+"' , 'stackTrace':'"+traceback.format_exc()+"'}", status=503, mimetype='application/json')
+        resp = Response('{"error":"'+str(error)+'"}', status=503)
     resp.headers['Access-Control-Allow-Origin'] = '*'
     resp.headers['Content-Type'] = 'application/json'
     return resp        
