@@ -20,15 +20,16 @@ def handle_oauth_callback():
 
 @app.route('/api/getSObjectIds',methods=['POST'])
 def get_sobject_ids():
-    if not request.json or not 'sessionId' in request.json or not 'instanceURL' in request.json or not 'batchSize' in request.json or not 'query' in request.json :
-        abort(400)    
-    result = util.kmlib.getSObjectIds(request.json['query'],request.json['sessionId'],request.json['instanceURL'],request.json['batchSize'])    
-    print('jsonDump-->')
-    print(json.dumps(result))
-    resp = Response(json.dumps(result))
+    try:
+        if not request.json or not 'sessionId' in request.json or not 'instanceURL' in request.json or not 'batchSize' in request.json or not 'query' in request.json :
+            abort(400)    
+        result = util.kmlib.getSObjectIds(request.json['query'],request.json['sessionId'],request.json['instanceURL'],request.json['batchSize'])        
+        resp = Response(json.dumps(result))       
+    except as error:
+        resp = Response("{'errorMessage':'"+error+"'}", status=503, mimetype='application/json')
     resp.headers['Access-Control-Allow-Origin'] = '*'
     resp.headers['Content-Type'] = 'application/json'
-    return resp
+    return resp        
 
 @app.route('/api/runApexCode',methods=['POST'])
 def runApexCode():
