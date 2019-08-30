@@ -73,12 +73,13 @@ def runApexCode(apexCode, sessionId, instanceURL, orgId):
     headers  = {'Content-Type':'text/xml','SOAPAction':'""'}
     result = requests.post(endpoint, data=xmlData, headers=headers)   
     responseDOM = minidom.parseString(result.text)
+    print('result.text-->'+str(result.text))
     compiled = responseDOM.getElementsByTagName('compiled')[0].firstChild.data
     if compiled == 'false':
         raise Exception('Compilation Error : '+responseDOM.getElementsByTagName('compileProblem')[0].firstChild.data)
     success = responseDOM.getElementsByTagName('success')[0].firstChild.data
-    if success == 'false':
-        raise Exception('Runtime Error : ' +responseDOM.getElementsByTagName('exceptionMessage')[0].firstChild.data)
+    #if success == 'false':
+    #    raise Exception('Runtime Error : ' +responseDOM.getElementsByTagName('exceptionMessage')[0].firstChild.data)
     debugLog = responseDOM.getElementsByTagName('debugLog')
     log = debugLog[0].firstChild.data
     return log
