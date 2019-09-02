@@ -63,6 +63,7 @@ def getUserInfo():
     return resp 
 
 @app.route('/api/makeToolingAPIQuery',methods=['GET'])
+def makeToolingAPIQuery():
     try:
         if not request.json or not 'sessionId' in request.json or not 'instanceURL' in request.json or not 'query' in request.json:
             raise Exception('Paramters are missing.')
@@ -77,7 +78,7 @@ def getUserInfo():
     resp.headers['Access-Control-Allow-Origin'] = '*'
     resp.headers['Content-Type'] = 'application/json'
     return resp
-        
+
 if __name__ == '__main__':    
     app.run()
     
