@@ -83,3 +83,12 @@ def runApexCode(apexCode, sessionId, instanceURL, orgId):
     debugLog = responseDOM.getElementsByTagName('debugLog')
     log = debugLog[0].firstChild.data
     return log
+
+def makeToolingAPIQuery(query,instanceURL,sessionId):
+    endpoint = '{}/services/data/v45.0/tooling/query?q={}'.format(instanceURL,query)    
+    headers  = {'Content-Type':'application/json','Authorization':'Bearer '+sessionId }
+    result = requests.get(endpoint, headers=headers)
+    return result.text    
+
+if __name__ == '__main__':    
+    makeToolingAPIQuery("SELECT%20MasterLabel%2CQualifiedApiName%2CDataType%2CDescription%20FROM%20FieldDefinition%20WHERE%20EntityDefinition.QualifiedApiName%3D'Account'",'https://sflab-dev-ed.my.salesforce.com','00D1I00000032xk!AQQAQH9rDjik_vFJbf7fQ2tsBwWfaR8MXnl.zKrleB35XVZpUQOO1UfNjeO39zf8BxWItRJALYhbWfvQ4.tM4qbP3gqjd5p2');

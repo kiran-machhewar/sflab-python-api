@@ -61,7 +61,23 @@ def getUserInfo():
     resp.headers['Access-Control-Allow-Origin'] = '*'
     resp.headers['Content-Type'] = 'application/json'
     return resp 
-    
+
+@app.route('/api/makeToolingAPIQuery',methods=['GET'])
+    try:
+        if not request.json or not 'sessionId' in request.json or not 'instanceURL' in request.json or not 'query' in request.json:
+            raise Exception('Paramters are missing.')
+        query = request.json['query']    
+        sessionId = request.json['sessionId']    
+        instanceURL = request.json['instanceURL']            
+        
+        result = util.kmlib.makeToolingAPIQuery( query, sessionId, instanceURL)
+        resp = Response(result)
+    except Exception as error:
+        resp = Response(str(error), status=400)
+    resp.headers['Access-Control-Allow-Origin'] = '*'
+    resp.headers['Content-Type'] = 'application/json'
+    return resp
+        
 if __name__ == '__main__':    
     app.run()
     
