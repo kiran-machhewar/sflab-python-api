@@ -62,7 +62,7 @@ def getUserInfo():
     resp.headers['Content-Type'] = 'application/json'
     return resp 
 
-@app.route('/api/makeToolingAPIQuery',methods=['GET'])
+@app.route('/api/makeToolingAPIQuery',methods=['POST'])
 def makeToolingAPIQuery():
     try:
         if not request.json or not 'sessionId' in request.json or not 'instanceURL' in request.json or not 'query' in request.json:
@@ -71,7 +71,7 @@ def makeToolingAPIQuery():
         sessionId = request.json['sessionId']    
         instanceURL = request.json['instanceURL']            
         
-        result = util.kmlib.makeToolingAPIQuery( query, sessionId, instanceURL)
+        result = util.kmlib.makeToolingAPIQuery( query, instanceURL,sessionId)
         resp = Response(result)
     except Exception as error:
         resp = Response(str(error), status=400)
